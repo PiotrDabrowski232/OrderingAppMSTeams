@@ -27,12 +27,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DIConfig\" />
+    <ProjectReference Include="..\OrderingApp.Data\OrderingApp.Data.csproj" />
+    <ProjectReference Include="..\OrderingApp.Logic\OrderingApp.Logic.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OrderingApp.Data\OrderingApp.Data.csproj" />
-    <ProjectReference Include="..\OrderingApp.Logic\OrderingApp.Logic.csproj" />
+    <Folder Include="logs\" />
   </ItemGroup>
 
 </Project>

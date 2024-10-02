@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using OrderingApp;
 using OrderingApp.Components;
 using OrderingApp.Data.DBConfig;
+using OrderingApp.DIConfig;
 using OrderingApp.Interop.TeamsSDK;
 using Serilog;
 
@@ -33,6 +34,9 @@ var connectionString = builder.Configuration.GetConnectionString("Connection");
 
 builder.Services.AddDbContext<OrderingDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+builder.Services.WithServices();
+
 
 
 var app = builder.Build();
