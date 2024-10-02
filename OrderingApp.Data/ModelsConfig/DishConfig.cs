@@ -1,0 +1,64 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using OrderingApp.Data.Models;
+using OrderingApp.Logic.Extensions;
+using System.Data;
+
+namespace OrderingApp.Data.ModelsConfig
+{
+    public class DishConfig : IEntityTypeConfiguration<Dish>
+    {
+        public void Configure(EntityTypeBuilder<Dish> builder)
+        {
+            builder.HasKey(x => x.Id);
+
+            var dishes = new Dish[]
+            {
+                CreateDish(1.ToGuid(), "Kung Pao Chicken", "Spicy stir-fried chicken with peanuts and vegetables.", 10.99f, 1.ToGuid()),
+                CreateDish(2.ToGuid(), "Sweet and Sour Pork", "Crispy pork in sweet and sour sauce with bell peppers and pineapple.", 9.99f, 1.ToGuid()),
+                CreateDish(3.ToGuid(), "Chow Mein", "Stir-fried noodles with vegetables and your choice of meat.", 8.99f, 1.ToGuid()),
+                CreateDish(4.ToGuid(), "Spring Rolls", "Crispy rolls filled with vegetables and served with dipping sauce.", 5.99f, 1.ToGuid()),
+                CreateDish(5.ToGuid(), "Egg Fried Rice", "Fried rice with eggs, peas, and carrots.", 4.99f, 1.ToGuid()),
+
+                CreateDish(6.ToGuid(), "Margherita Pizza", "Classic pizza with tomato, mozzarella, and fresh basil.", 12.99f, 2.ToGuid()),
+                CreateDish(7.ToGuid(), "Lasagna", "Layers of pasta with meat, cheese, and marinara sauce.", 14.99f, 2.ToGuid()),
+                CreateDish(8.ToGuid(), "Penne Arrabbiata", "Penne pasta in a spicy tomato sauce with garlic.", 11.99f, 2.ToGuid()),
+                CreateDish(9.ToGuid(), "Tiramisu", "Coffee-flavored dessert with mascarpone cheese.", 6.99f, 2.ToGuid()),
+                CreateDish(10.ToGuid(), "Garlic Bread", "Toasted bread topped with garlic butter and parsley.", 3.99f, 2.ToGuid()),
+
+                CreateDish(11.ToGuid(), "Cheeseburger", "Juicy beef patty with cheese, lettuce, and tomato.", 9.99f, 3.ToGuid()),
+                CreateDish(12.ToGuid(), "Fries", "Crispy golden fries served with ketchup.", 2.99f, 3.ToGuid()),
+                CreateDish(13.ToGuid(), "Chicken Nuggets", "Breaded chicken pieces served with dipping sauce.", 6.99f, 3.ToGuid()),
+                CreateDish(14.ToGuid(), "Milkshake", "Creamy milkshake available in chocolate or vanilla.", 4.99f, 3.ToGuid()),
+                CreateDish(15.ToGuid(), "Onion Rings", "Crispy onion rings with a side of ranch dressing.", 3.99f, 3.ToGuid()),
+
+                CreateDish(16.ToGuid(), "Taco al Pastor", "Pork tacos with pineapple, onion, and cilantro.", 3.50f, 4.ToGuid()),
+                CreateDish(17.ToGuid(), "Vegetarian Burrito", "Burrito filled with beans, rice, and fresh vegetables.", 8.99f, 4.ToGuid()),
+                CreateDish(18.ToGuid(), "Quesadilla", "Grilled tortilla filled with cheese and served with salsa.", 6.99f, 4.ToGuid()),
+                CreateDish(19.ToGuid(), "Elote (Corn on the Cob)", "Grilled corn topped with cheese and chili powder.", 4.50f, 4.ToGuid()),
+                CreateDish(20.ToGuid(), "Nachos", "Tortilla chips topped with cheese, jalapenos, and guacamole.", 5.99f, 4.ToGuid()),
+
+                CreateDish(21.ToGuid(), "Avocado Toast", "Toasted bread topped with mashed avocado and poached egg.", 7.99f, 5.ToGuid()),
+                CreateDish(22.ToGuid(), "Cappuccino", "Rich espresso topped with steamed milk and foam.", 3.99f, 5.ToGuid()),
+                CreateDish(23.ToGuid(), "Caesar Salad", "Crisp romaine lettuce with Caesar dressing and croutons.", 6.99f, 5.ToGuid()),
+                CreateDish(24.ToGuid(), "Blueberry Muffin", "Freshly baked muffin loaded with blueberries.", 2.99f, 5.ToGuid()),
+                CreateDish(25.ToGuid(), "Chicken Salad Sandwich", "Chicken salad served on toasted bread with lettuce.", 8.99f, 5.ToGuid()),
+            };
+
+            builder.HasData(dishes);
+        }
+
+        private static Dish CreateDish(Guid id, string name, string description, float price, Guid restaurantId)
+        {
+            return new Dish
+            {
+                Id = id,
+                Name = name,
+                Description = description,
+                Price = price,
+                RestaurantId = restaurantId,
+            };
+        }
+    }
+}
+

@@ -1,6 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using OrderingApp;
 using OrderingApp.Components;
+using OrderingApp.Data.DBConfig;
 using OrderingApp.Interop.TeamsSDK;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +19,22 @@ builder.Services.AddHttpClient("WebClient", client => client.Timeout = TimeSpan.
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAntiforgery(o => o.SuppressXFrameOptionsHeader = true);
 
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug() 
+    .WriteTo.Console()    
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day) 
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
+//DbContext
+
+var connectionString = builder.Configuration.GetConnectionString("Connection");
+
+builder.Services.AddDbContext<OrderingDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -25,7 +44,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
