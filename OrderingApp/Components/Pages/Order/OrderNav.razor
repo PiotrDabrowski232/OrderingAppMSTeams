@@ -1,0 +1,66 @@
+﻿@page "/OrderNav"
+@using Microsoft.Extensions.Configuration
+@using Microsoft.AspNetCore.Hosting
+@using Microsoft.Extensions.Hosting
+@inject TeamsUserCredential teamsUserCredential
+@inject IWebHostEnvironment HostEnvironment
+@inject IConfiguration Configuration
+@inject NavigationManager MyNavigationManager
+
+
+    <div style="padding-left:2vw; padding-top:1.5vh;">
+        <FluentTabs ActiveTabId="@defaultTabId">
+            <FluentTab Id="tab-1">
+                <Header>
+                    Orders List
+                </Header>
+                <Content>
+                    <Orders />
+                </Content>
+            </FluentTab>
+            <FluentTab Id="tab-2">
+                <Header>
+                    Create New Order List
+                </Header>
+                <Content>
+                <CreateOrder />
+                </Content>
+            </FluentTab>
+        </FluentTabs>
+    </div>
+
+
+
+@code {
+
+    string userName;
+
+    string errorMessage;
+
+    bool isLoading = true;
+
+    string defaultTabId = "tab-1"; 
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+        await base.OnAfterRenderAsync(firstRender);
+
+        try
+        {
+
+            if (firstRender)
+            {
+                var user = await teamsUserCredential.GetUserInfoAsync();
+
+                userName = user.DisplayName;
+            }
+        }
+        finally
+        {
+            isLoading = false;
+
+            StateHasChanged();
+        }
+    }
+}

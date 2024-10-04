@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderingApp.Logic", "Orderi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderingApp.Data", "OrderingApp.Data\OrderingApp.Data.csproj", "{969C4604-E52A-4101-8653-3D74ED2632FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderingApp.Shared", "OrderingApp.Shared\OrderingApp.Shared.csproj", "{9B2F7488-26A4-4633-A7A6-D8424A9ADD24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderingApp.Shared", "OrderingApp.Shared\OrderingApp.Shared.csproj", "{9B2F7488-26A4-4633-A7A6-D8424A9ADD24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
