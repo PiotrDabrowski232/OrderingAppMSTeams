@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Fast.Components.FluentUI;
 using OrderingApp;
 using OrderingApp.Components;
 using OrderingApp.Data.DBConfig;
@@ -37,6 +38,7 @@ builder.Services.AddDbContext<OrderingDbContext>(options =>
 
 builder.Services.WithServices();
 
+builder.Services.AddFluentUIComponents();
 
 
 var app = builder.Build();

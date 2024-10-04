@@ -12,8 +12,8 @@ using OrderingApp.Data.DBConfig;
 namespace OrderingApp.Data.Migrations
 {
     [DbContext(typeof(OrderingDbContext))]
-    [Migration("20241002105307_INIT")]
-    partial class INIT
+    [Migration("20241004125711_addedOrderModelChanges")]
+    partial class addedOrderModelChanges
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -254,6 +254,47 @@ namespace OrderingApp.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("OrderingApp.Data.Models.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("BankAccountNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("DeliveryCost")
+                        .HasColumnType("real");
+
+                    b.Property<float>("FreeDeliveryFrom")
+                        .HasColumnType("real");
+
+                    b.Property<float>("MinValue")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PhoneNumber")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("RestaurantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("OrderingApp.Data.Models.Restaurant", b =>
                 {
                     b.Property<Guid>("Id")
@@ -331,9 +372,22 @@ namespace OrderingApp.Data.Migrations
                     b.Navigation("Restaurant");
                 });
 
+            modelBuilder.Entity("OrderingApp.Data.Models.Order", b =>
+                {
+                    b.HasOne("OrderingApp.Data.Models.Restaurant", "Restaurant")
+                        .WithMany("Orders")
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
+                });
+
             modelBuilder.Entity("OrderingApp.Data.Models.Restaurant", b =>
                 {
                     b.Navigation("Dishes");
+
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

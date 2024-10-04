@@ -1,4 +1,4 @@
-﻿namespace OrderingApp.Logic.Extensions
+﻿namespace OrderingApp.Shared.Extensions
 {
     public static class IntToGuidExtension
     {

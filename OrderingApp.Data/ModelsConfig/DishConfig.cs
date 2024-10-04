@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OrderingApp.Data.Models;
-using OrderingApp.Logic.Extensions;
-using System.Data;
+using OrderingApp.Shared.Extensions;
 
 namespace OrderingApp.Data.ModelsConfig
 {

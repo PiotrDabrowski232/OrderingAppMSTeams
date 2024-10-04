@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OrderingApp.Data.Models;
 using OrderingApp.Data.Models.Enum;
-using OrderingApp.Logic.Extensions;
+using OrderingApp.Shared.Extensions;
 
 namespace OrderingApp.Data.ModelsConfig
 {
@@ -13,6 +13,10 @@ namespace OrderingApp.Data.ModelsConfig
             builder.HasKey(x => x.Id);
 
             builder.HasMany(x => x.Dishes)
+                .WithOne(x => x.Restaurant)
+                .HasForeignKey(x => x.RestaurantId);
+
+            builder.HasMany(x => x.Orders)
                 .WithOne(x => x.Restaurant)
                 .HasForeignKey(x => x.RestaurantId);
 

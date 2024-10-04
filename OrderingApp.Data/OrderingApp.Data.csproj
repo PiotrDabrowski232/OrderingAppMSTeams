@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OrderingApp.Logic\OrderingApp.Logic.csproj" />
+    <ProjectReference Include="..\OrderingApp.Shared\OrderingApp.Shared.csproj" />
   </ItemGroup>
 
 </Project>

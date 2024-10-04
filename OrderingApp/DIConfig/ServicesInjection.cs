@@ -1,14 +1,18 @@
-﻿namespace OrderingApp.DIConfig
+﻿using System.Reflection;
+using AutoMapper; 
+
+namespace OrderingApp.DIConfig
 {
     public static class ServicesInjection
     {
 
         public static IServiceCollection WithServices(this IServiceCollection services)
         {
-            services.AddMediatR(cfg =>
-            {
-                cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
-            });
+            var assemblies = Assembly.Load("OrderingApp.Logic");
+
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assemblies));
+
+            services.AddAutoMapper(assemblies);
 
             return services;
         }

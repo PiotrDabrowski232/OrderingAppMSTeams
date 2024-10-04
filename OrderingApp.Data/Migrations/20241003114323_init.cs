@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OrderingApp.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class INIT : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -43,6 +43,29 @@ namespace OrderingApp.Data.Migrations
                     table.PrimaryKey("PK_Dishes", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Dishes_Restaurants_RestaurantId",
+                        column: x => x.RestaurantId,
+                        principalTable: "Restaurants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MinValue = table.Column<float>(type: "real", nullable: false),
+                    DeliveryCost = table.Column<float>(type: "real", nullable: false),
+                    FreeDeliveryFrom = table.Column<float>(type: "real", nullable: false),
+                    PhoneNumber = table.Column<int>(type: "int", nullable: false),
+                    BankAccountNumber = table.Column<long>(type: "bigint", nullable: false),
+                    RestaurantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Restaurants_RestaurantId",
                         column: x => x.RestaurantId,
                         principalTable: "Restaurants",
                         principalColumn: "Id",
@@ -97,6 +120,11 @@ namespace OrderingApp.Data.Migrations
                 name: "IX_Dishes_RestaurantId",
                 table: "Dishes",
                 column: "RestaurantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_RestaurantId",
+                table: "Orders",
+                column: "RestaurantId");
         }
 
         /// <inheritdoc />
@@ -104,6 +132,9 @@ namespace OrderingApp.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Dishes");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Restaurants");

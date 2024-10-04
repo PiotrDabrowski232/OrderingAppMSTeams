@@ -12,5 +12,7 @@ namespace OrderingApp.Data.Models
 
 
         public virtual ICollection<Dish> Dishes { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

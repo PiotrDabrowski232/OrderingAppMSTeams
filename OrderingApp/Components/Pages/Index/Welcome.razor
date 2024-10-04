@@ -1,0 +1,133 @@
+﻿@using Microsoft.Extensions.Configuration
+@using Microsoft.AspNetCore.Hosting
+@using Microsoft.Extensions.Hosting
+@using OrderingApp.Components.Pages.NewOrder;
+@inject TeamsUserCredential teamsUserCredential
+@inject IWebHostEnvironment HostEnvironment
+@inject IConfiguration Configuration
+@inject NavigationManager MyNavigationManager
+
+@if (isLoading)
+
+{
+    <div style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+        <FluentProgressRing />
+    </div>
+}
+
+else
+
+{
+
+    <h3 style="padding-left:1.5vw; padding-top:1vh;">Welcome in OrderApp</h3>
+
+    <h5 style="padding-left:2vw; padding-top:1.5vh;">Here you have several actions</h5>
+
+    <div style="padding-left:3vw; padding-top:1.5vh;">
+
+        <FluentTabs ActiveTabId="@activeTabId">
+            <FluentTab Id="tab-1">
+                <Header>
+                    Create New Order List
+                </Header>
+                <Content>
+                    <CreateOrder OnOrderSubmitted="HandleOrderSubmitted" TabToSwitch="tab-2" />
+                </Content>
+            </FluentTab>
+            <FluentTab Id="tab-2">
+                <Header>
+                    Check Current Order Lists
+                </Header>
+                <Content>
+                    Content 1
+                </Content>
+            </FluentTab>
+            <FluentTab Id="tab-3">
+                <Header>
+                    Check Available Restaurants
+                </Header>
+                <Content>
+                    Content 2
+                </Content>
+            </FluentTab>
+        </FluentTabs>
+
+    </div>
+
+    <Graph ErrorMessage="@errorMessage" />
+
+}
+
+@code {
+    string userName;
+
+    string errorMessage;
+
+    bool isLoading = true;
+
+
+
+
+    string activeTabId = "tab-1"; 
+
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+
+    {
+
+        await base.OnAfterRenderAsync(firstRender);
+
+
+
+        try
+
+        {
+
+            if (firstRender)
+
+            {
+
+                var user = await teamsUserCredential.GetUserInfoAsync();
+
+                userName = user.DisplayName;
+
+            }
+
+        }
+
+        finally
+
+        {
+
+            isLoading = false;
+
+            StateHasChanged();
+
+        }
+
+    }
+
+
+
+    private void HandleOrderSubmitted(string tabId)
+
+    {
+
+        SetActiveTab(tabId);
+    }
+
+
+
+
+
+    private void SetActiveTab(string tabId)
+
+    {
+
+        activeTabId = tabId;
+
+        StateHasChanged();
+
+    }
+}
