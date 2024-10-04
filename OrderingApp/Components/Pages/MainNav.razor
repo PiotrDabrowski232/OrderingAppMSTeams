@@ -1,55 +1,26 @@
-﻿@page "/"
-@page "/tab"
-@using OrderingApp.Components.Pages.Order
+﻿@using OrderingApp.Components.Pages.Order;
 
 
-@if (isLoading)
-{
-    <div style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
-        <FluentProgressRing />
-    </div>
-}
-else
-{
     <h3 style="padding-left:1.5vw; padding-top:1vh;">Welcome in OrderApp</h3>
 
     <h5 style="padding-left:2vw; padding-top:1.5vh;">Here you have several actions</h5>
 
-    <Graph ErrorMessage="@errorMessage" />
 
     <FluentTabs style="padding-left:3vw; padding-top:2.5vh;" ActiveTabId="tab-1">
-            <FluentTab Id="tab-1">
-                <Header>
-                    Order 
-                </Header>
-                <Content>
-                    <OrderNav/>
-                </Content>
-            </FluentTab>
-            <FluentTab Id="tab-2">
-                <Header>
-                    Restaurant
-                </Header>
-                <Content>
-                    Content 1
-                </Content>
-            </FluentTab>
-        </FluentTabs>
-
-}
-
-@code {
-
-    string errorMessage;
-
-    bool isLoading = true;
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-
-        isLoading = false;
-
-        StateHasChanged();
-    }
-}
+        <FluentTab Id="tab-1">
+            <Header>
+                Order
+            </Header>
+            <Content>
+                <OrderNav />
+            </Content>
+        </FluentTab>
+        <FluentTab Id="tab-2">
+            <Header>
+                Restaurant
+            </Header>
+            <Content>
+                Content 1
+            </Content>
+        </FluentTab>
+    </FluentTabs>

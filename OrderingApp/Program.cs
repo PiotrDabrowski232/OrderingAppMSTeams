@@ -39,6 +39,7 @@ builder.Services.AddDbContext<OrderingDbContext>(options =>
 builder.Services.WithServices();
 
 builder.Services.AddFluentUIComponents();
+builder.Services.AddDataGridEntityFrameworkAdapter();
 
 
 var app = builder.Build();
