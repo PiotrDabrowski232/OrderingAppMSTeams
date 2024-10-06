@@ -6,8 +6,8 @@
     <h5 style="padding-left:2vw; padding-top:1.5vh;">Here you have several actions</h5>
 
 
-    <FluentTabs style="padding-left:3vw; padding-top:2.5vh;" ActiveTabId="tab-1">
-        <FluentTab Id="tab-1">
+<FluentTabs style="padding-left:3vw; padding-top:2.5vh;" ActiveTabId="@activeTabId">
+    <FluentTab Id="tab-1" @onclick="@(() => OnTabChanged("tab-1"))">
             <Header>
                 Order
             </Header>
@@ -15,7 +15,7 @@
                 <OrderNav />
             </Content>
         </FluentTab>
-        <FluentTab Id="tab-2">
+    <FluentTab Id="tab-2" @onclick="@(() => OnTabChanged("tab-2"))">
             <Header>
                 Restaurant
             </Header>
@@ -24,3 +24,25 @@
             </Content>
         </FluentTab>
     </FluentTabs>
+
+    @code{
+    private string activeTabId = "tab-1";
+
+
+
+    private void OnTabChanged(string tabId)
+
+    {
+
+        if (!string.IsNullOrEmpty(tabId))
+
+        {
+
+            activeTabId = tabId;
+
+            StateHasChanged();
+
+        }
+
+    }
+    }

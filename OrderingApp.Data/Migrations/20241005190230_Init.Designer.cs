@@ -12,8 +12,8 @@ using OrderingApp.Data.DBConfig;
 namespace OrderingApp.Data.Migrations
 {
     [DbContext(typeof(OrderingDbContext))]
-    [Migration("20241004125711_addedOrderModelChanges")]
-    partial class addedOrderModelChanges
+    [Migration("20241005190230_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -267,13 +267,20 @@ namespace OrderingApp.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<float>("DeliveryCost")
                         .HasColumnType("real");
 
                     b.Property<float>("FreeDeliveryFrom")
                         .HasColumnType("real");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<float>("MinValue")
                         .HasColumnType("real");

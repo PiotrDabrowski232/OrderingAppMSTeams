@@ -1,6 +1,6 @@
-using Microsoft.TeamsFx.Configuration;
+﻿using Microsoft.TeamsFx.Configuration;
 
-namespace OrderingApp
+namespace OrderingApp.Logic
 {
     public class ConfigOptions
     {

@@ -264,13 +264,20 @@ namespace OrderingApp.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<float>("DeliveryCost")
                         .HasColumnType("real");
 
                     b.Property<float>("FreeDeliveryFrom")
                         .HasColumnType("real");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<float>("MinValue")
                         .HasColumnType("real");

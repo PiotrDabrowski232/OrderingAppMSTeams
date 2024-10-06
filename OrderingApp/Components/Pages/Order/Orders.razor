@@ -1,30 +1,31 @@
 ﻿@page "/Orders"
-
-
+@using MediatR
+@using OrderingApp.Logic.DTO
+@using OrderingApp.Logic.Functions.Query.Order
+@inject IMediator _mediator
 
 <div style="padding-left:1.5vw; padding-top:1vh;">
 
     <h3>Orders</h3>
 
-    <FluentDataGrid Items="@people">
-        <PropertyColumn Property="@(p => p.PersonId)" Sortable="true" />
-        <PropertyColumn Property="@(p => p.Name)" Sortable="true" />
-        <PropertyColumn Property="@(p => p.BirthDate)" Format="yyyy-MM-dd" Sortable="true" />
-    </FluentDataGrid>
+    <ul>
+        @if (OrderDetails != null && OrderDetails.Any())
+        {
+            @foreach (var x in OrderDetails)
+            {
+                <li>@x.Name</li>
+            }
+        }
+    </ul>
 
 </div>
 
-
 @code {
-    record Person(int PersonId, string Name, DateOnly BirthDate);
+    public IQueryable<OrderDetails> OrderDetails { get; set; }
 
-    IQueryable<Person> people = new[]
+    protected override async Task OnInitializedAsync()
     {
-        new Person(10895, "Jean Martin", new DateOnly(1985, 3, 16)),
-        new Person(10944, "António Langa", new DateOnly(1991, 12, 1)),
-        new Person(11203, "Julie Smith", new DateOnly(1958, 10, 10)),
-        new Person(11205, "Nur Sari", new DateOnly(1922, 4, 27)),
-        new Person(11898, "Jose Hernandez", new DateOnly(2011, 5, 3)),
-        new Person(12130, "Kenji Sato", new DateOnly(2004, 1, 9)),
-    }.AsQueryable();
+        var orders = await _mediator.Send(new GetAllActiveOrdersQuery());
+        OrderDetails = orders.AsQueryable();
+    }
 }

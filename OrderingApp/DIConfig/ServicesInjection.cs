@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
-using AutoMapper; 
+using AutoMapper;
+using OrderingApp.Logic.Services;
+using OrderingApp.Logic.Services.Interface;
 
 namespace OrderingApp.DIConfig
 {
@@ -13,6 +15,9 @@ namespace OrderingApp.DIConfig
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assemblies));
 
             services.AddAutoMapper(assemblies);
+
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IUserProfileService, UserProfileService>();
 
             return services;
         }

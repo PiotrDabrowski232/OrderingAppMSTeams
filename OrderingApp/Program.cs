@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Fast.Components.FluentUI;
-using OrderingApp;
+using OrderingApp.Logic;
 using OrderingApp.Components;
 using OrderingApp.Data.DBConfig;
 using OrderingApp.DIConfig;
@@ -34,7 +34,7 @@ builder.Host.UseSerilog();
 var connectionString = builder.Configuration.GetConnectionString("Connection");
 
 builder.Services.AddDbContext<OrderingDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
 
 builder.Services.WithServices();
 

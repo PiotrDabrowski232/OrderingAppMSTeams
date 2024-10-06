@@ -13,7 +13,7 @@
 @inject TeamsFx teamsfx
 @inject TeamsUserCredential teamsUserCredential
 
- <div style="padding-left:1.5vw; padding-top:1vh;">
+<div style="padding-left:1.5vw; padding-top:1vh;">
     <h2>Specify Order Details</h2>
 
     <EditForm Model="Order" OnValidSubmit="HandleValidSubmit" novalidate>
@@ -28,12 +28,20 @@
             <div>
                 <FluentSelect Name="RestaurantName" @bind-Value="Order.RestaurantId" TOption="string" Required Label="Restaurant Picker">
                     <FluentOption Value="">Select Restaurant ...</FluentOption>
-                    @if (Restaurants != null && Restaurants.Any())
+                    @if (IsLoading)
+                    {
+                        <FluentOption>Loading restaurants...</FluentOption>
+                    }
+                    else if (Restaurants != null && Restaurants.Any())
                     {
                         foreach (var restaurant in Restaurants)
                         {
                             <FluentOption Value="@restaurant.Key.ToString()">@restaurant.Value</FluentOption>
                         }
+                    }
+                    else
+                    {
+                        <FluentOption>No restaurants available</FluentOption>
                     }
                 </FluentSelect>
                 <ValidationMessage For="@(() => Order.RestaurantId)" />
@@ -69,38 +77,37 @@
             </div>
         </FluentStack>
     </EditForm>
-
 </div>
+
 @code {
     private OrderDto Order { get; set; } = new OrderDto();
     private IDictionary<Guid, string> Restaurants { get; set; } = new Dictionary<Guid, string>();
-    public User Profile { get; set; }
     private EditContext editContext;
-    private readonly string _scope = "User.Read";
+    private bool IsLoading { get; set; } = true;
 
     protected override async Task OnInitializedAsync()
     {
         editContext = new EditContext(Order);
-        Restaurants = await _mediator.Send(new GetRestaurantNamesQuery()) ?? new Dictionary<Guid, string>();
+        try
+        {
+            IsLoading = true;
+
+            Restaurants = await _mediator.Send(new GetRestaurantNamesQuery()) ?? new Dictionary<Guid, string>();
+        }   
+        catch (Exception ex)
+        {
+            ShowErrorToast(ex);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
     }
 
     private async Task HandleValidSubmit()
     {
         try
         {
-            var tokenCredential = await GetOnBehalfOfCredential();
-            var graph = GetGraphServiceClient(tokenCredential);
-
-            Profile = await graph.Me.GetAsync();
-            if (Guid.TryParse(Profile.Id, out Guid createdBy))
-            {
-                Order.CreatedBy = createdBy;
-            }
-            else
-            {
-                throw new ArgumentException("Profile is not set");
-            }
-
             await _mediator.Send(new CreateOrderCommand(Order));
             ShowSuccessToast();
 
@@ -121,25 +128,4 @@
     {
         ToastService.ShowToast(ToastIntent.Error, $"Failed to create order: {ex.Message}");
     }
-
-    private GraphServiceClient GetGraphServiceClient(TokenCredential tokenCredential)
-    {
-        var client = new GraphServiceClient(tokenCredential, new string[] { _scope });
-        return client;
-    }
-
-    private async Task<OnBehalfOfCredential> GetOnBehalfOfCredential()
-    {
-        var config = Configuration.Get<ConfigOptions>();
-        var tenantId = config.TeamsFx.Authentication.OAuthAuthority.Remove(0, "https://login.microsoftonline.com/".Length);
-        AccessToken ssoToken = await teamsUserCredential.GetTokenAsync(new TokenRequestContext(null), new CancellationToken());
-        return new OnBehalfOfCredential(
-            tenantId,
-            config.TeamsFx.Authentication.ClientId,
-            config.TeamsFx.Authentication.ClientSecret,
-            ssoToken.Token
-        );
-    }
 }
-
-

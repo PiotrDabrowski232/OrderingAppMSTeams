@@ -11,6 +11,7 @@
         public long BankAccountNumber { get; set; }
         public DateTime CreationDate { get; set; }
         public Guid CreatedBy { get; set; }
+        public bool IsActive { get; set; }
 
         public Guid RestaurantId { get; set; }
         public virtual Restaurant Restaurant { get; set; }

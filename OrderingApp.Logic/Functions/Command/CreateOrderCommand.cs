@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using OrderingApp.Data.DBConfig;
 using OrderingApp.Data.Models;
 using OrderingApp.Logic.DTO;
+using OrderingApp.Logic.Services.Interface;
 using OrderingApp.Shared.Exceptions;
 
 namespace OrderingApp.Logic.Functions.Command
@@ -13,34 +13,31 @@ namespace OrderingApp.Logic.Functions.Command
         public OrderDto Order { get; set; } = order;
     }
 
-    public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Guid>
+    public class CreateOrderCommandHandler : BaseRequestHandler<CreateOrderCommand, Guid>
     {
-        private readonly OrderingDbContext _dbContext;
-        private readonly IMapper _mapper;
+        private readonly IOrderService _orderService;
 
-        public CreateOrderCommandHandler(OrderingDbContext dbContext, IMapper mapper)
+        public CreateOrderCommandHandler(OrderingDbContext dbContext, IMapper mapper, IOrderService orderService) : base(dbContext, mapper)
         {
-            _dbContext = dbContext;
-            _mapper = mapper;
+            _orderService = orderService;
         }
 
-        public async Task<Guid> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+        public override async Task<Guid> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
             var order = _mapper.Map<Order>(request.Order);
-            order.CreationDate = DateTime.Now;
 
             try
             {
-                if (await _dbContext.Orders.AnyAsync(x => x.Name == order.Name, cancellationToken))
-                    throw new EntityExistException("There is Order Named this way");
+                if (await _orderService.OrderNameExist(order.Name, cancellationToken))
+                    throw new EntityExistException("There is Active Order Named this way");
 
                 await _dbContext.Orders.AddAsync(order, cancellationToken);
                 await _dbContext.SaveChangesAsync(cancellationToken);
-                return order.Id; 
+                return order.Id;
             }
             catch
             {
-                throw; 
+                throw;
             }
         }
     }
