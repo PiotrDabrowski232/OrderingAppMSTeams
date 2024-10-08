@@ -27,7 +27,7 @@
             @foreach (var x in FilteredRestaurants)
             {
                 <tr>
-                    <td>@x.Name</td>
+                    <td><a href="/Restaurant/@x.Id/@x.Name">@x.Name</a></td>
                     <td>@x.Type</td>
                 </tr>
             }

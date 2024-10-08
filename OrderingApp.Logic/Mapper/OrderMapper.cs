@@ -17,7 +17,7 @@ namespace OrderingApp.Logic.Mapper
                 .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => true));
 
 
-            CreateMap<Order, OrderDetails>()
+            CreateMap<Order, OrderDetailsDto>()
                 .ForMember(dest => dest.RestaurantName, opt => opt.MapFrom(src => src.Restaurant.Name))
                 .ForMember(dest => dest.RestaurantType, opt => opt.MapFrom(src => Enum.GetName(typeof(RestauranType), src.Restaurant.RestaurantType)));
 

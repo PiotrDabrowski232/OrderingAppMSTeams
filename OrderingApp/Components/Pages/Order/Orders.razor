@@ -3,26 +3,89 @@
 @using OrderingApp.Logic.DTO
 @using OrderingApp.Logic.Functions.Query.Order
 @inject IMediator _mediator
+@inject NavigationManager Navigation
 
-<div style="padding-left:1.5vw; padding-top:1vh;">
+<div style="padding-left:1.5vw; margin-right:5vw; padding-top:1vh;">
 
     <h3>Orders</h3>
 
-    <FluentDataGrid Items="@OrderDetails">
-        <PropertyColumn Property="@(p => p.Name)" Sortable="true" />
-        <PropertyColumn Property="@(p => p.RestaurantName)" Sortable="true" />
-        <PropertyColumn Property="@(p => p.RestaurantType)" Sortable="true" />
-        <PropertyColumn Property="@(p => p.CreationDate)" Format="yyyy-MM-dd" Sortable="true" />
-    </FluentDataGrid>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Order Name</th>
+                <th scope="col">Restaurant Name</th>
+                <th scope="col">Restaurant Type</th>
+                <th scope="col">Creation Date</th>
+                <th style="width:6vw; text-align:center;" scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (OrderDetails.Any())
+            {   
+            @foreach (var x in OrderDetails)
+            {
+                <tr>
+                    <td>@x.Name</td>
+                    <td>@x.RestaurantName</td>
+                    <td>@Enum.GetName(x.RestaurantType)</td>
+                    <td>@x.CreationDate</td>
+                    <td>
+                            <FluentTooltipProvider />
 
+                        @if(x.MyOrder){
+                                <FluentTooltip Anchor="@($"{x.Name}_{x.MyOrder}")" Position=TooltipPosition.End>
+                                    <strong>
+                                        Update<br />
+                                        order<br />
+                                        details
+                                    </strong>
+                                </FluentTooltip>
+
+                                <FluentTooltip Anchor="@($"{x.Name}_{x.CreationDate}")" Position=TooltipPosition.Start>
+                                    <strong>
+                                        Show order details
+                                    </strong>
+                                </FluentTooltip>
+
+                                <FluentButton Id="@($"{x.Name}_{x.CreationDate}")" @onclick="() => RouteToOrderDetails(x.Id)" Appearance="Appearance.Outline">
+                                    <i class="bi bi-water"></i>
+                                </FluentButton>
+
+                                <FluentButton Id="@($"{x.Name}_{x.MyOrder}")" @onclick="() => RouteToUpdateOrder(x.Id)" style="margin-left:0.25vw;" Appearance="Appearance.Outline">
+                                    <i class="bi bi-filter-square-fill"></i>
+                                </FluentButton>
+                            }else
+                            {
+                                <FluentTooltip Anchor="@x.Name" Position=TooltipPosition.Start>
+                                    <strong>Sign up to the list</strong>
+                                </FluentTooltip>
+
+                                <FluentButton Id="@x.Name" Appearance="Appearance.Outline">
+                                    <i class="bi bi-clipboard2-plus"></i>
+                                </FluentButton>
+                            }
+                    </td>
+                </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" style="text-align: center;padding-top:4vh;">There aren't any created orders</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
 @code {
-    public IQueryable<OrderDetails> OrderDetails { get; set; }
+    public IEnumerable<OrderDetailsDto> OrderDetails { get; set; } = Enumerable.Empty<OrderDetailsDto>();
 
     protected override async Task OnInitializedAsync()
     {
-        var orders = await _mediator.Send(new GetAllActiveOrdersQuery());
-        OrderDetails = orders.AsQueryable();
+        OrderDetails = await _mediator.Send(new GetAllActiveOrdersQuery());
     }
+
+    private void RouteToOrderDetails(Guid orderId) => Navigation.NavigateTo($"/Orderdetails/{orderId}");
+    private void RouteToUpdateOrder(Guid orderId) => Navigation.NavigateTo($"/UpdateOrderDetails/{orderId}");
 }
