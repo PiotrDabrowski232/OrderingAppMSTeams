@@ -34,7 +34,7 @@ builder.Host.UseSerilog();
 var connectionString = builder.Configuration.GetConnectionString("Connection");
 
 builder.Services.AddDbContext<OrderingDbContext>(options =>
-    options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
+    options.UseSqlServer(connectionString));
 
 builder.Services.WithServices();
 

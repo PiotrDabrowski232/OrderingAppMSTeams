@@ -1,5 +1,7 @@
-﻿@using OrderingApp.Components.Pages.Order;
+﻿@page "/Main/{Tab?}"
 
+@using OrderingApp.Components.Pages.Order;
+@using OrderingApp.Components.Pages.Restaurant;
 
     <h3 style="padding-left:1.5vw; padding-top:1vh;">Welcome in OrderApp</h3>
 
@@ -17,32 +19,32 @@
         </FluentTab>
     <FluentTab Id="tab-2" @onclick="@(() => OnTabChanged("tab-2"))">
             <Header>
-                Restaurant
+                Restaurants
             </Header>
             <Content>
-                Content 1
+                <RestaurantBase/>
             </Content>
         </FluentTab>
     </FluentTabs>
 
-    @code{
+@code{
+    [Parameter]
+    public string? Tab { get; set; }
+
+
     private string activeTabId = "tab-1";
 
 
+    protected override void OnParametersSet() => activeTabId = Tab ?? "tab-1";
 
-    private void OnTabChanged(string tabId)
-
-    {
-
-        if (!string.IsNullOrEmpty(tabId))
-
+        private void OnTabChanged(string tabId)
         {
 
-            activeTabId = tabId;
+            if (!string.IsNullOrEmpty(tabId))
+            {
+                activeTabId = tabId;
 
-            StateHasChanged();
-
+                StateHasChanged();
+            }
         }
-
-    }
     }

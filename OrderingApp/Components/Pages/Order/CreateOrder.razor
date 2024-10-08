@@ -1,17 +1,10 @@
 ﻿@page "/CreateOrder"
-@using Azure.Core
-@using Azure.Identity
-@using Microsoft.Graph
-@using Microsoft.Graph.Models
 @using OrderingApp.Logic.DTO
 @using MediatR
 @using OrderingApp.Logic.Functions.Command
 @using OrderingApp.Logic.Functions.Query.Order
 @inject IMediator _mediator
 @inject IToastService ToastService
-@inject IConfiguration Configuration
-@inject TeamsFx teamsfx
-@inject TeamsUserCredential teamsUserCredential
 
 <div style="padding-left:1.5vw; padding-top:1vh;">
     <h2>Specify Order Details</h2>

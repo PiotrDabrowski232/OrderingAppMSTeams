@@ -4,7 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Graph;
 using Microsoft.Graph.Models;
 using Microsoft.TeamsFx;
+using OrderingApp.Data.Models;
 using OrderingApp.Logic.Services.Interface;
+using OrderingApp.Shared.Exceptions;
 
 namespace OrderingApp.Logic.Services
 {
@@ -17,6 +19,16 @@ namespace OrderingApp.Logic.Services
         {
             _teamsUserCredential = teamsUserCredential;
             _configuration = configuration;
+        }
+
+        public async Task<Guid> GetUserProfileIdAsync()
+        {
+            Guid id;
+            var user = await GetUserProfileAsync();
+            if (Guid.TryParse(user.Id, out id))
+                return id;
+            else
+                throw new WrongProfileCredentialsException("We can't load profile credentials");
         }
 
         public async Task<User> GetUserProfileAsync()

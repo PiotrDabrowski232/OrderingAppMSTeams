@@ -28,9 +28,15 @@ namespace OrderingApp.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("Calories")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsExtras")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -52,7 +58,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000001-0000-0000-0000-000000000000"),
+                            Calories = 324,
                             Description = "Spicy stir-fried chicken with peanuts and vegetables.",
+                            IsExtras = true,
                             Name = "Kung Pao Chicken",
                             Price = 10.99f,
                             RestaurantId = new Guid("00000001-0000-0000-0000-000000000000")
@@ -60,7 +68,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000002-0000-0000-0000-000000000000"),
+                            Calories = 324,
                             Description = "Crispy pork in sweet and sour sauce with bell peppers and pineapple.",
+                            IsExtras = true,
                             Name = "Sweet and Sour Pork",
                             Price = 9.99f,
                             RestaurantId = new Guid("00000001-0000-0000-0000-000000000000")
@@ -68,7 +78,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000003-0000-0000-0000-000000000000"),
+                            Calories = 523,
                             Description = "Stir-fried noodles with vegetables and your choice of meat.",
+                            IsExtras = false,
                             Name = "Chow Mein",
                             Price = 8.99f,
                             RestaurantId = new Guid("00000001-0000-0000-0000-000000000000")
@@ -76,7 +88,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000004-0000-0000-0000-000000000000"),
+                            Calories = 442,
                             Description = "Crispy rolls filled with vegetables and served with dipping sauce.",
+                            IsExtras = false,
                             Name = "Spring Rolls",
                             Price = 5.99f,
                             RestaurantId = new Guid("00000001-0000-0000-0000-000000000000")
@@ -84,7 +98,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000005-0000-0000-0000-000000000000"),
+                            Calories = 543,
                             Description = "Fried rice with eggs, peas, and carrots.",
+                            IsExtras = true,
                             Name = "Egg Fried Rice",
                             Price = 4.99f,
                             RestaurantId = new Guid("00000001-0000-0000-0000-000000000000")
@@ -92,7 +108,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000006-0000-0000-0000-000000000000"),
+                            Calories = 552,
                             Description = "Classic pizza with tomato, mozzarella, and fresh basil.",
+                            IsExtras = false,
                             Name = "Margherita Pizza",
                             Price = 12.99f,
                             RestaurantId = new Guid("00000002-0000-0000-0000-000000000000")
@@ -100,7 +118,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000007-0000-0000-0000-000000000000"),
+                            Calories = 324,
                             Description = "Layers of pasta with meat, cheese, and marinara sauce.",
+                            IsExtras = true,
                             Name = "Lasagna",
                             Price = 14.99f,
                             RestaurantId = new Guid("00000002-0000-0000-0000-000000000000")
@@ -108,7 +128,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000008-0000-0000-0000-000000000000"),
+                            Calories = 324,
                             Description = "Penne pasta in a spicy tomato sauce with garlic.",
+                            IsExtras = false,
                             Name = "Penne Arrabbiata",
                             Price = 11.99f,
                             RestaurantId = new Guid("00000002-0000-0000-0000-000000000000")
@@ -116,7 +138,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000009-0000-0000-0000-000000000000"),
+                            Calories = 324,
                             Description = "Coffee-flavored dessert with mascarpone cheese.",
+                            IsExtras = true,
                             Name = "Tiramisu",
                             Price = 6.99f,
                             RestaurantId = new Guid("00000002-0000-0000-0000-000000000000")
@@ -124,7 +148,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("0000000a-0000-0000-0000-000000000000"),
+                            Calories = 532,
                             Description = "Toasted bread topped with garlic butter and parsley.",
+                            IsExtras = false,
                             Name = "Garlic Bread",
                             Price = 3.99f,
                             RestaurantId = new Guid("00000002-0000-0000-0000-000000000000")
@@ -132,7 +158,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("0000000b-0000-0000-0000-000000000000"),
+                            Calories = 632,
                             Description = "Juicy beef patty with cheese, lettuce, and tomato.",
+                            IsExtras = true,
                             Name = "Cheeseburger",
                             Price = 9.99f,
                             RestaurantId = new Guid("00000003-0000-0000-0000-000000000000")
@@ -140,7 +168,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("0000000c-0000-0000-0000-000000000000"),
+                            Calories = 783,
                             Description = "Crispy golden fries served with ketchup.",
+                            IsExtras = true,
                             Name = "Fries",
                             Price = 2.99f,
                             RestaurantId = new Guid("00000003-0000-0000-0000-000000000000")
@@ -148,7 +178,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("0000000d-0000-0000-0000-000000000000"),
+                            Calories = 643,
                             Description = "Breaded chicken pieces served with dipping sauce.",
+                            IsExtras = false,
                             Name = "Chicken Nuggets",
                             Price = 6.99f,
                             RestaurantId = new Guid("00000003-0000-0000-0000-000000000000")
@@ -156,7 +188,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("0000000e-0000-0000-0000-000000000000"),
+                            Calories = 532,
                             Description = "Creamy milkshake available in chocolate or vanilla.",
+                            IsExtras = true,
                             Name = "Milkshake",
                             Price = 4.99f,
                             RestaurantId = new Guid("00000003-0000-0000-0000-000000000000")
@@ -164,7 +198,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("0000000f-0000-0000-0000-000000000000"),
+                            Calories = 644,
                             Description = "Crispy onion rings with a side of ranch dressing.",
+                            IsExtras = false,
                             Name = "Onion Rings",
                             Price = 3.99f,
                             RestaurantId = new Guid("00000003-0000-0000-0000-000000000000")
@@ -172,7 +208,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000010-0000-0000-0000-000000000000"),
+                            Calories = 200,
                             Description = "Pork tacos with pineapple, onion, and cilantro.",
+                            IsExtras = true,
                             Name = "Taco al Pastor",
                             Price = 3.5f,
                             RestaurantId = new Guid("00000004-0000-0000-0000-000000000000")
@@ -180,7 +218,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000011-0000-0000-0000-000000000000"),
+                            Calories = 642,
                             Description = "Burrito filled with beans, rice, and fresh vegetables.",
+                            IsExtras = false,
                             Name = "Vegetarian Burrito",
                             Price = 8.99f,
                             RestaurantId = new Guid("00000004-0000-0000-0000-000000000000")
@@ -188,7 +228,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000012-0000-0000-0000-000000000000"),
+                            Calories = 644,
                             Description = "Grilled tortilla filled with cheese and served with salsa.",
+                            IsExtras = false,
                             Name = "Quesadilla",
                             Price = 6.99f,
                             RestaurantId = new Guid("00000004-0000-0000-0000-000000000000")
@@ -196,7 +238,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000013-0000-0000-0000-000000000000"),
+                            Calories = 532,
                             Description = "Grilled corn topped with cheese and chili powder.",
+                            IsExtras = false,
                             Name = "Elote (Corn on the Cob)",
                             Price = 4.5f,
                             RestaurantId = new Guid("00000004-0000-0000-0000-000000000000")
@@ -204,7 +248,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000014-0000-0000-0000-000000000000"),
+                            Calories = 783,
                             Description = "Tortilla chips topped with cheese, jalapenos, and guacamole.",
+                            IsExtras = true,
                             Name = "Nachos",
                             Price = 5.99f,
                             RestaurantId = new Guid("00000004-0000-0000-0000-000000000000")
@@ -212,7 +258,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000015-0000-0000-0000-000000000000"),
+                            Calories = 783,
                             Description = "Toasted bread topped with mashed avocado and poached egg.",
+                            IsExtras = false,
                             Name = "Avocado Toast",
                             Price = 7.99f,
                             RestaurantId = new Guid("00000005-0000-0000-0000-000000000000")
@@ -220,7 +268,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000016-0000-0000-0000-000000000000"),
+                            Calories = 644,
                             Description = "Rich espresso topped with steamed milk and foam.",
+                            IsExtras = true,
                             Name = "Cappuccino",
                             Price = 3.99f,
                             RestaurantId = new Guid("00000005-0000-0000-0000-000000000000")
@@ -228,7 +278,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000017-0000-0000-0000-000000000000"),
+                            Calories = 532,
                             Description = "Crisp romaine lettuce with Caesar dressing and croutons.",
+                            IsExtras = true,
                             Name = "Caesar Salad",
                             Price = 6.99f,
                             RestaurantId = new Guid("00000005-0000-0000-0000-000000000000")
@@ -236,7 +288,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000018-0000-0000-0000-000000000000"),
+                            Calories = 642,
                             Description = "Freshly baked muffin loaded with blueberries.",
+                            IsExtras = true,
                             Name = "Blueberry Muffin",
                             Price = 2.99f,
                             RestaurantId = new Guid("00000005-0000-0000-0000-000000000000")
@@ -244,7 +298,9 @@ namespace OrderingApp.Data.Migrations
                         new
                         {
                             Id = new Guid("00000019-0000-0000-0000-000000000000"),
+                            Calories = 643,
                             Description = "Chicken salad served on toasted bread with lettuce.",
+                            IsExtras = false,
                             Name = "Chicken Salad Sandwich",
                             Price = 8.99f,
                             RestaurantId = new Guid("00000005-0000-0000-0000-000000000000")

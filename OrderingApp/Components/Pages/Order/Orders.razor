@@ -8,15 +8,12 @@
 
     <h3>Orders</h3>
 
-    <ul>
-        @if (OrderDetails != null && OrderDetails.Any())
-        {
-            @foreach (var x in OrderDetails)
-            {
-                <li>@x.Name</li>
-            }
-        }
-    </ul>
+    <FluentDataGrid Items="@OrderDetails">
+        <PropertyColumn Property="@(p => p.Name)" Sortable="true" />
+        <PropertyColumn Property="@(p => p.RestaurantName)" Sortable="true" />
+        <PropertyColumn Property="@(p => p.RestaurantType)" Sortable="true" />
+        <PropertyColumn Property="@(p => p.CreationDate)" Format="yyyy-MM-dd" Sortable="true" />
+    </FluentDataGrid>
 
 </div>
 
